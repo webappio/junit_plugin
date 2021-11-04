@@ -9,14 +9,14 @@ RUN curl -fSsL https://deb.nodesource.com/setup_16.x | bash && \
 MEMORY 2G
 ENV NODE_OPTIONS=--max-old-space-size=8192
 
-WORKDIR lib
+WORKDIR app
 RUN npm install
-RUN BACKGROUND npm start
+RUN npm run build
 
-WORKDIR ../app
+WORKDIR ../lib
 RUN npm install
 RUN BACKGROUND npm start
 
 # Create a unique link to share the app in this runner.
 # Every time someone clicks the link, we'll wake up this staging server.
-EXPOSE WEBSITE http://localhost:3001
+EXPOSE WEBSITE http://localhost:3000

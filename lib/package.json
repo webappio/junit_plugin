@@ -13,5 +13,8 @@
   "dependencies": {
     "express": "^4.17.1",
     "express-ws": "^5.0.2"
+  },
+  "devDependencies": {
+    "node-ssh": "^12.0.1"
   }
 }
