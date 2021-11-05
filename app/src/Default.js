@@ -12,7 +12,6 @@ function Default() {
     })
 
     let xmlFiles = xml.split('\n');
-    console.log(xmlFiles)
 
     return (
         <div className="Default">
@@ -24,7 +23,7 @@ function Default() {
                 {xmlFiles.map(file =>
                     <a
                         className="App-link"
-                        href={"http://127.0.0.1:3000/xml/"+file}
+                        href={"/xml/"+file}
                         target="_blank"
                         rel="noopener noreferrer"
                     >

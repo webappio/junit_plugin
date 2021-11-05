@@ -4,21 +4,38 @@ import {useParams} from "react-router-dom";
 
 function XML() {
     const [sshOutput, setSshOutput] = useState();
-    const jobUuid = useParams();
+    const [xml, setXml] = useState('');
+    let { jobUuid } = useParams();
 
     useEffect(() =>{
-        fetch(`/${jobUuid}/ssh`)
+        fetch(`/ssh/${jobUuid}`)
             .then(response => response.text())
             .then(data => setSshOutput(data))
+        fetch('/xml')
+            .then(response => response.text())
+            .then(data => setXml(data))
     })
 
+    let xmlFiles = xml.split('\n');
+    console.log(sshOutput)
+
     return (
-        <div className="XML">
+        <div className="Xml">
             <header className="App-header">
                 <img src={logo} className="App-logo" alt="logo"/>
                 <p>
-                    <code>{sshOutput}</code>
+                    JUnit XMLs for job {jobUuid}
                 </p>
+                {xmlFiles.map(file =>
+                    <a
+                        className="App-link"
+                        href={"/xml/"+file}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        {file}
+                    </a>
+                )}
             </header>
         </div>
     );
