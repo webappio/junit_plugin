@@ -1,4 +1,3 @@
-import logo from "./logo.svg";
 import React, {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 
@@ -22,9 +21,8 @@ function XML() {
     return (
         <div className="Xml">
             <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo"/>
                 <p>
-                    JUnit XMLs for job {jobUuid}
+                    All JUnit XML reports for job {jobUuid}:
                 </p>
                 {xmlFiles.map(file =>
                     <a

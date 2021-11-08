@@ -17,7 +17,7 @@ function App() {
                         <Route path="*" element={<NoMatch />} />
                     </Route>
                 </Routes>
-            </BrowserRouter>,
+            </BrowserRouter>
         </div>
     );
 }
