@@ -1,34 +1,35 @@
-import logo from "./logo.svg"
+import logo from './logo.svg';
+import './App.css';
 import React, {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 
 function XML() {
-    const [sshOutput, setSshOutput] = useState();
     const [xml, setXml] = useState('');
+    const [sshOutput, setSshOutput] = useState('');
     let { jobUuid } = useParams();
 
+    let xmlFiles = xml.split('\n');
+
     useEffect(() =>{
-        fetch(`/ssh/${jobUuid}`)
-            .then(response => response.text())
-            .then(data => setSshOutput(data))
         fetch('/xml')
             .then(response => response.text())
             .then(data => setXml(data))
+        fetch(`/ssh/${jobUuid}`)
+            .then(response => response.text())
+            .then(data => setSshOutput(data))
     })
 
-    let xmlFiles = xml.split('\n');
-    console.log(sshOutput)
-
     return (
-        <div className="Xml">
+        <div className="Default">
             <header className="App-header">
+                <img src={logo} className="App-logo" alt="logo"/>
                 <p>
-                    All JUnit XML reports for job {jobUuid}:
+                    Edit <code>src/App.js</code> and save to reload.
                 </p>
                 {xmlFiles.map(file =>
                     <a
                         className="App-link"
-                        href={"/xml/"+file}
+                        href={"/failed-tests/"+file}
                         target="_blank"
                         rel="noopener noreferrer"
                     >

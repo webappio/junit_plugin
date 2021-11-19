@@ -2,6 +2,8 @@ import './App.css';
 import {BrowserRouter, Route, Routes, Link} from "react-router-dom";
 import Default from "./Default";
 import XML from "./Xml"
+import FailedTests from "./FailedTests";
+import React from 'react';
 
 function App() {
     return (
@@ -9,11 +11,9 @@ function App() {
             <BrowserRouter>
                 <Routes>
                     <Route path="/">
-                        <Route index element={<Default/>} />
+                        <Route index element={<Default />} />
                         <Route path=":jobUuid" element={<XML />} />
-                        {/* Using path="*"" means "match anything", so this route
-                acts like a catch-all for URLs that we don't have explicit
-                routes for. */}
+                        <Route path="failed-tests/:fileName" element={<FailedTests />}/>
                         <Route path="*" element={<NoMatch />} />
                     </Route>
                 </Routes>
