@@ -1,7 +1,7 @@
 import './App.css';
 import {BrowserRouter, Route, Routes, Link} from "react-router-dom";
 import Default from "./Default";
-import XML from "./Xml"
+import Job from "./Job"
 import FailedTests from "./FailedTests";
 import React from 'react';
 
@@ -12,7 +12,7 @@ function App() {
                 <Routes>
                     <Route path="/">
                         <Route index element={<Default />} />
-                        <Route path=":jobUuid" element={<XML />} />
+                        <Route path=":jobUuid" element={<Job />} />
                         <Route path="failed-tests/:fileName" element={<FailedTests />}/>
                         <Route path="*" element={<NoMatch />} />
                     </Route>

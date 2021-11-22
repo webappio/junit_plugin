@@ -1,9 +1,8 @@
-import logo from './logo.svg';
 import './App.css';
 import React, {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 
-function XML() {
+function Job() {
     const [xml, setXml] = useState('');
     const [sshOutput, setSshOutput] = useState('');
     let { jobUuid } = useParams();
@@ -11,29 +10,28 @@ function XML() {
     let xmlFiles = xml.split('\n');
 
     useEffect(() =>{
-        fetch('/xml')
+        fetch('/api/xml')
             .then(response => response.text())
             .then(data => setXml(data))
-        fetch(`/ssh/${jobUuid}`)
+        fetch(`/api/ssh/${jobUuid}`)
             .then(response => response.text())
             .then(data => setSshOutput(data))
+        console.log(sshOutput)
     })
 
     return (
         <div className="Default">
             <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo"/>
                 <p>
-                    Edit <code>src/App.js</code> and save to reload.
+                    All JUnit XML files for job {jobUuid}
                 </p>
-                {xmlFiles.map(file =>
+                {xmlFiles.map(fileName =>
                     <a
                         className="App-link"
-                        href={"/failed-tests/"+file}
-                        target="_blank"
+                        href={"/failed-tests/"+fileName}
                         rel="noopener noreferrer"
                     >
-                        {file}
+                        {fileName}
                     </a>
                 )}
             </header>
@@ -41,4 +39,4 @@ function XML() {
     );
 }
 
-export default XML;
+export default Job;

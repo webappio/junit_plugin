@@ -1,30 +1,28 @@
-import logo from './logo.svg';
 import './App.css';
 import React, {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 
 function FailedTests() {
-    const [failedIds, setFailedIds] = useState([]);
+    const [failedTestData, setFailedTestData] = useState([]);
     let { fileName } = useParams();
 
     useEffect(() => {
         (async function() {
             await fetch(`/api/failed-tests/${fileName}`)
                 .then(response => response.json())
-                .then(data => setFailedIds(data))
+                .then(data => setFailedTestData(data))
         })()
-    }, [])
+    }, [fileName])
 
     return (
         <div className="Default">
             <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo"/>
                 <p>
-                    Edit <code>src/App.js</code> and save to reload.
+                    List of failed tests:
                 </p>
-                {failedIds.map(id =>
-                    <li><a href={`/stdout/${fileName}/${id}`}>{id}</a></li>
-                )}
+                {
+                    failedTestData.map(data => <li><a href={`/stdout/${fileName}/${data.id}`}>{data.text}</a></li>)
+                }
             </header>
         </div>
     );

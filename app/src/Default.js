@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import React, {useEffect, useState} from "react";
 
@@ -6,7 +5,7 @@ function Default() {
     const [xml, setXml] = useState('');
 
     useEffect(() =>{
-        fetch('/xml')
+        fetch('/api/xml')
             .then(response => response.text())
             .then(data => setXml(data))
     })
@@ -16,9 +15,8 @@ function Default() {
     return (
         <div className="Default">
             <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo"/>
                 <p>
-                    Edit <code>src/App.js</code> and save to reload.
+                    Example JUnit XML reports:
                 </p>
                 {xmlFiles.map(file =>
                     <a
