@@ -3,16 +3,14 @@ import React, {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 
 function Job() {
-    const [xml, setXml] = useState('');
+    const [xmlFiles, setXmlFiles] = useState([]);
     const [sshOutput, setSshOutput] = useState('');
     let { jobUuid } = useParams();
 
-    let xmlFiles = xml.split('\n');
-
     useEffect(() =>{
         fetch('/api/xml')
-            .then(response => response.text())
-            .then(data => setXml(data))
+            .then(response => response.json())
+            .then(data => setXmlFiles(data))
         fetch(`/api/ssh/${jobUuid}`)
             .then(response => response.text())
             .then(data => setSshOutput(data))

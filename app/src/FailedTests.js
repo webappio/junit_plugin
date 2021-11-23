@@ -23,6 +23,12 @@ function FailedTests() {
                 {
                     failedTestData.map(data => <li><a href={`/stdout/${fileName}/${data.id}`}>{data.text}</a></li>)
                 }
+                <p>
+                    Full JUnit XML report:
+                </p>
+                {
+                    <a href={`/xml/${fileName}`}>{fileName}</a>
+                }
             </header>
         </div>
     );
