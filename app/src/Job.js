@@ -1,37 +1,35 @@
+import './App.css';
 import React, {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 
-function XML() {
-    const [sshOutput, setSshOutput] = useState();
-    const [xml, setXml] = useState('');
+function Job() {
+    const [xmlFiles, setXmlFiles] = useState([]);
+    const [sshOutput, setSshOutput] = useState('');
     let { jobUuid } = useParams();
 
     useEffect(() =>{
-        fetch(`/ssh/${jobUuid}`)
+        fetch('/api/xml')
+            .then(response => response.json())
+            .then(data => setXmlFiles(data))
+        fetch(`/api/ssh/${jobUuid}`)
             .then(response => response.text())
             .then(data => setSshOutput(data))
-        fetch('/xml')
-            .then(response => response.text())
-            .then(data => setXml(data))
+        console.log(sshOutput)
     })
 
-    let xmlFiles = xml.split('\n');
-    console.log(sshOutput)
-
     return (
-        <div className="Xml">
+        <div className="Default">
             <header className="App-header">
                 <p>
-                    All JUnit XML reports for job {jobUuid}:
+                    All JUnit XML files for job {jobUuid}
                 </p>
-                {xmlFiles.map(file =>
+                {xmlFiles.map(fileName =>
                     <a
                         className="App-link"
-                        href={"/xml/"+file}
-                        target="_blank"
+                        href={"/failed-tests/"+fileName}
                         rel="noopener noreferrer"
                     >
-                        {file}
+                        {fileName}
                     </a>
                 )}
             </header>
@@ -39,4 +37,4 @@ function XML() {
     );
 }
 
-export default XML;
+export default Job;

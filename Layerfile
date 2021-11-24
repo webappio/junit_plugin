@@ -3,7 +3,7 @@ COPY . .
 # To note: Layerfiles create entire VMs, *not* containers!
 RUN apt-get update && apt-get upgrade
 RUN curl -fSsL https://deb.nodesource.com/setup_16.x | bash && \
-    apt-get install nodejs python3 python3-pip make gcc build-essential
+    apt-get install nodejs python3 python3-pip make gcc build-essential chromium-browser
 RUN pip3 install junit2html
 
 # node is a memory hog

@@ -1,33 +1,29 @@
-import logo from './logo.svg';
 import './App.css';
 import React, {useEffect, useState} from "react";
 
 function Default() {
-    const [xml, setXml] = useState('');
+    const [xmlFiles, setXmlFiles] = useState([]);
 
     useEffect(() =>{
-        fetch('/xml')
-            .then(response => response.text())
-            .then(data => setXml(data))
+        fetch('/api/xml')
+            .then(response => response.json())
+            .then(data => setXmlFiles(data))
     })
-
-    let xmlFiles = xml.split('\n');
 
     return (
         <div className="Default">
             <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo"/>
                 <p>
-                    Edit <code>src/App.js</code> and save to reload.
+                    Example JUnit XML report:
                 </p>
-                {xmlFiles.map(file =>
+                {xmlFiles.map(fileName =>
                     <a
                         className="App-link"
-                        href={"/xml/"+file}
+                        href={"/xml/"+fileName}
                         target="_blank"
                         rel="noopener noreferrer"
                     >
-                        {file}
+                        {fileName}
                     </a>
                 )}
             </header>
