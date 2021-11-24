@@ -1,6 +1,8 @@
 import './App.css';
 import React, {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
+import {List, ListItemButton, ListItemText, Typography} from "@mui/material";
+import Box from "@mui/material/Box";
 
 function Job() {
     const [xmlFiles, setXmlFiles] = useState([]);
@@ -20,18 +22,18 @@ function Job() {
     return (
         <div className="Default">
             <header className="App-header">
-                <p>
-                    All JUnit XML files for job {jobUuid}
-                </p>
-                {xmlFiles.map(fileName =>
-                    <a
-                        className="App-link"
-                        href={"/failed-tests/"+fileName}
-                        rel="noopener noreferrer"
-                    >
-                        {fileName}
-                    </a>
-                )}
+                <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+                    <Typography sx={{ mt: 4, mb: 2 }} variant="h6" component="div">
+                        All JUnit XML files for job {jobUuid}
+                    </Typography>
+                    <List>
+                        {xmlFiles.map(fileName =>
+                            <ListItemButton component="a" href={"/failed-tests/"+fileName}>
+                                <ListItemText primary={fileName} />
+                            </ListItemButton>
+                        )}
+                    </List>
+                </Box>
             </header>
         </div>
     );
