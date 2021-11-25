@@ -5,16 +5,12 @@ import {List, ListItemButton, ListItemText, Typography} from "@mui/material";
 import Box from "@mui/material/Box";
 
 function Job() {
-    const [xmlFiles, setXmlFiles] = useState([]);
-    const [sshOutput, setSshOutput] = useState('');
+    const [sshOutput, setSshOutput] = useState([]);
     let { jobUuid } = useParams();
 
     useEffect(() =>{
-        fetch('/api/xml')
-            .then(response => response.json())
-            .then(data => setXmlFiles(data))
         fetch(`/api/ssh/${jobUuid}`)
-            .then(response => response.text())
+            .then(response => response.json())
             .then(data => setSshOutput(data))
         console.log(sshOutput)
     })
@@ -27,9 +23,9 @@ function Job() {
                         All JUnit XML files for job {jobUuid}
                     </Typography>
                     <List>
-                        {xmlFiles.map(fileName =>
-                            <ListItemButton component="a" href={"/failed-tests/"+fileName}>
-                                <ListItemText primary={fileName} />
+                        {sshOutput.map(file =>
+                            <ListItemButton component="a" href={"/failed-tests/"+file.name}>
+                                <ListItemText primary={file.name} />
                             </ListItemButton>
                         )}
                     </List>
