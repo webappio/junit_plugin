@@ -16,7 +16,7 @@ function FailedTests() {
     }, [fileName])
 
     return (
-        <div className="Default">
+        <div className="FailedTests">
             <header className="App-header">
                 <Box sx={{
                     backgroundColor: failedTestData.length > 0 ? "error.main" : "success.main",
