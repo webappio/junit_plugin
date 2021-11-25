@@ -22,7 +22,7 @@ function Job() {
     return (
         <div className="Default">
             <header className="App-header">
-                <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+                <Box sx={{ width: '100%', maxWidth: 720, bgcolor: 'background.paper' }}>
                     <Typography sx={{ mt: 4, mb: 2 }} variant="h6" component="div">
                         All JUnit XML files for job {jobUuid}
                     </Typography>
