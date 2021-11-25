@@ -14,12 +14,11 @@ function Tests() {
             await fetch(`/api/tests/${fileName}`)
                 .then(response => response.json())
                 .then(data => setTestCounts(data))
-            console.log(testCounts)
             await fetch(`/api/failed-tests/${fileName}`)
                 .then(response => response.json())
                 .then(data => setFailedTestData(data))
         })()
-    }, [fileName, testCounts])
+    }, [fileName])
 
     return (
         <div className="Tests">
