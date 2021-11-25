@@ -12,8 +12,7 @@ function Job() {
         fetch(`/api/ssh/${jobUuid}`)
             .then(response => response.json())
             .then(data => setSshOutput(data))
-        console.log(sshOutput)
-    })
+    }, [jobUuid])
 
     return (
         <div className="Default">
@@ -24,7 +23,7 @@ function Job() {
                     </Typography>
                     <List>
                         {sshOutput.map(file =>
-                            <ListItemButton component="a" href={"/failed-tests/"+file.name}>
+                            <ListItemButton component="a" href={"/tests/"+file.name}>
                                 <ListItemText primary={file.name} />
                             </ListItemButton>
                         )}
