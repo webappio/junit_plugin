@@ -6,28 +6,30 @@ import {Button, Typography} from "@mui/material";
 
 function Tests() {
     const [failedTestData, setFailedTestData] = useState([]);
-    const [testCounts, setTestCounts] = useState({})
+    const [testsData, setTestsData] = useState({})
     let { fileName } = useParams();
 
     useEffect(() => {
         (async function() {
             await fetch(`/api/tests/${fileName}`)
                 .then(response => response.json())
-                .then(data => setTestCounts(data))
+                .then(data => setTestsData(data))
             await fetch(`/api/failed-tests/${fileName}`)
                 .then(response => response.json())
                 .then(data => setFailedTestData(data))
         })()
     }, [fileName])
 
+    let passed = testsData.tests - testsData.failures
+
     return (
         <div className="Tests">
             <header className="App-header">
                 <Box margin={3}>
                     {
-                        testCounts ? <>
+                        testsData ? <>
                             <Box margin={3} display="flex" flexDirection="row">
-                                <Box display="flex" width="30vw"/>
+                                <Box display="flex" width="25vw"/>
                                 <Box
                                     display="flex"
                                     flexGrow={1}
@@ -46,7 +48,7 @@ function Tests() {
                                         }}
                                     >
                                         <Typography style={{color: "#FFFFFF"}} variant="h4">
-                                            Passed: {testCounts.testCount - testCounts.failedCount}
+                                            Passed: {passed}
                                         </Typography>
                                     </Box>
                                     <Box
@@ -62,13 +64,29 @@ function Tests() {
                                         }}
                                     >
                                         <Typography style={{color: "#FFFFFF"}} variant="h4">
-                                            Failures: {testCounts.failedCount}
+                                            Failures: {testsData.failures}
+                                        </Typography>
+                                    </Box>
+                                    <Box
+                                        marginLeft={5}
+                                        display="flex"
+                                        alignItems="center"
+                                        justifyContent="center"
+                                        sx={{
+                                            width: 300,
+                                            height: 150,
+                                            backgroundColor: '#9e9e9e',
+                                            borderRadius: 5
+                                        }}
+                                    >
+                                        <Typography style={{color: "#FFFFFF"}} variant="h4">
+                                            Duration: {testsData.time}
                                         </Typography>
                                     </Box>
                                 </Box>
-                                <Box display="flex" width="30vw"/>
+                                <Box display="flex" width="25vw"/>
                             </Box>
-                            <Box display="flex" flexDirection="column">
+                            <Box display="flex" flexDirection="column" justifyContent="center" paddingX={3} >
                                 {failedTestData.map(data => {
                                     return(
                                         <Box

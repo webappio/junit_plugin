@@ -4,18 +4,17 @@ import "./Widget.css"
 import {Box} from "@mui/material";
 
 export default function Widget() {
-    const { fileName } = useParams();
-    const [testCounts, setTestCounts] = useState({})
+    const { jobUuid } = useParams();
+    const [testsData, setTestsData] = useState({})
 
     useEffect(() => {
-        fetch(`/api/tests/${fileName}`)
+        fetch(`/api/all-tests/${jobUuid}`)
             .then(response => response.json())
-            .then(data => setTestCounts(data))
-            .catch(e => console.error(e));
-    }, [fileName]);
+            .then(data => setTestsData(data));
+    }, [jobUuid]);
 
-    const passed = testCounts ? testCounts.testCount - testCounts.failedCount : 0;
-    const failures = testCounts ? testCounts.failedCount : 0;
+    const passed = testsData ? testsData.tests - testsData.failures : 0;
+    const failures = testsData ? testsData.failures : 0;
 
     const status = <span className={failures > 0 ? "status-failure" : "status-success"}>
         <i className="feather icon-check-circle"/>&nbsp;{failures > 0 ? failures +" Failures" : "Success"}
@@ -45,7 +44,7 @@ export default function Widget() {
 
     return <Box display="flex" flexDirection="column" padding="30px">
         <Box display="flex" flexDirection="row" justifyContent="space-between" alignItems="center">
-            <h5 className="topbar-text">Cypress Test Results</h5>
+            <h5 className="topbar-text">JUnit Test Results</h5>
             {status}
         </Box>
         <Box display="flex" className="main-container">
