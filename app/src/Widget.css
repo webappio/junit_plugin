@@ -1,0 +1,55 @@
+.status-success {
+    color: #549D90;
+    margin: 10px;
+}
+
+.status-failure {
+    color: #822525;
+    margin: 10px;
+}
+
+.main-container {
+    border-radius: 15px;
+    overflow: hidden;
+    margin-top: 30px
+}
+
+.section {
+    flex: 1 1 auto;
+    border-radius: 15px;
+    margin: 10px;
+}
+
+.section h5 {
+    font-size: 22px;
+    margin: 15px 0;
+}
+
+.section .status-subtext {
+    font-size: 50px;
+    margin: 25px 0;
+}
+
+.section.passed-tests hr {
+    border-color: #206E5F;
+}
+
+.section.passed-tests {
+    background-color: #258271;
+    color: #FFFFFF;
+}
+
+.section.failed-tests hr {
+    border-color: #AC4343;
+}
+
+.section.failed-tests {
+    background-color: #C65858;
+    color: #FFFFFF;
+}
+
+.topbar-text {
+    margin: 10px;
+    padding: 0;
+    font-size: 17px;
+}

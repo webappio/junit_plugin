@@ -2,6 +2,7 @@ import './App.css';
 import {BrowserRouter, Route, Routes, Link} from "react-router-dom";
 import Job from "./Job"
 import Tests from "./Tests";
+import Widget from "./Widget"
 import React from 'react';
 
 function App() {
@@ -10,13 +11,22 @@ function App() {
             <BrowserRouter>
                 <Routes>
                     <Route path="/">
-                        <Route index element={<NoMatch />} />
+                        <Route index element={<NoJob />} />
                         <Route path=":jobUuid" element={<Job />} />
                         <Route path="tests/:fileName" element={<Tests />}/>
+                        <Route path="widget/:fileName" element={<Widget />}/>
                         <Route path="*" element={<NoMatch />} />
                     </Route>
                 </Routes>
             </BrowserRouter>
+        </div>
+    );
+}
+
+function NoJob() {
+    return (
+        <div>
+            <h2>Nothing to see here! Please provide a job UUID!</h2>
         </div>
     );
 }
