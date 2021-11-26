@@ -8,6 +8,8 @@ export default function Widget() {
     const [testsData, setTestsData] = useState({})
 
     useEffect(() => {
+        // should use this api with jobUUID (otherwise - which xml to use? might as well parse all and add up)
+        // TODO: api does not work yet
         fetch(`/api/all-tests/${jobUuid}`)
             .then(response => response.json())
             .then(data => setTestsData(data));

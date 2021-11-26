@@ -25,7 +25,7 @@ function Tests() {
     return (
         <div className="Tests">
             <header className="App-header">
-                <Box margin={3}>
+                <Box margin={3} maxWidth='100vw'>
                     {
                         testsData ? <>
                             <Box margin={3} display="flex" flexDirection="row">
