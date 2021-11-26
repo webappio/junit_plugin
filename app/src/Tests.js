@@ -12,10 +12,6 @@ function Tests() {
     const [loadFailedTestData, setLoadFailedTestData] = useState(true);
     let { fileName, jobUuid } = useParams();
 
-    useEffect(() => {
-        getTestCount();
-        getFailedTestData();
-    }, [fileName, getTestCount, getFailedTestData])
 
     const getTestCount = async () => {
         await fetch(`/api/tests/${fileName}`)
@@ -34,6 +30,11 @@ function Tests() {
             setLoadFailedTestData(false);
         })
     }
+
+    useEffect(() => {
+        getTestCount();
+        getFailedTestData();
+    }, [fileName, getTestCount, getFailedTestData])
 
     return (
         <div className="Tests">
