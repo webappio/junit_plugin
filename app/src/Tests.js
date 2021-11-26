@@ -1,6 +1,6 @@
 import './App.css';
 import React, {useEffect, useState} from "react";
-import {useParams, Link} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import Box from '@mui/material/Box';
 import {Button, CircularProgress, Typography } from "@mui/material";
 import { blue } from "./styles";
@@ -15,7 +15,7 @@ function Tests() {
     useEffect(() => {
         getTestCount();
         getFailedTestData();
-    }, [fileName])
+    }, [fileName, getTestCount, getFailedTestData])
 
     const getTestCount = async () => {
         await fetch(`/api/tests/${fileName}`)

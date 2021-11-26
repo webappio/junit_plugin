@@ -1,7 +1,7 @@
 import './App.css';
 import React, {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
-import {List, ListItemButton, ListItemText, Typography, CircularProgress, Button } from "@mui/material";
+import {List, Typography, CircularProgress, Button } from "@mui/material";
 import Box from "@mui/material/Box";
 import { blue } from "./styles";
 
