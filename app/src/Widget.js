@@ -9,14 +9,14 @@ export default function Widget() {
 
     useEffect(() => {
         // should use this api with jobUUID (otherwise - which xml to use? might as well parse all and add up)
-        // TODO: api does not work yet
         fetch(`/api/all-tests/${jobUuid}`)
             .then(response => response.json())
-            .then(data => setTestsData(data));
+            .then(data => setTestsData(data[0]));
     }, [jobUuid]);
 
     const passed = testsData ? testsData.tests - testsData.failures : 0;
     const failures = testsData ? testsData.failures : 0;
+    const duration = testsData ? testsData.time : 0;
 
     const status = <span className={failures > 0 ? "status-failure" : "status-success"}>
         <i className="feather icon-check-circle"/>&nbsp;{failures > 0 ? failures +" Failures" : "Success"}
@@ -35,6 +35,13 @@ export default function Widget() {
             <h5>Passed</h5>
             <hr />
             <h3 className="status-subtext">{passed}</h3>
+        </div>)
+    }
+    if(duration > 0) {
+        sections.push(<div className="section duration">
+            <h5>Duration</h5>
+            <hr />
+            <h3 className="status-subtext">{duration.toFixed(1)}s</h3>
         </div>)
     }
 
