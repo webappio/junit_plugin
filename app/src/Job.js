@@ -32,7 +32,7 @@ function Job() {
                         <CircularProgress />
                             :
                         sshOutput.map(file =>
-                            <a href={"/tests/"+file.name} style={{ textDecoration: "none" }}>
+                            <a href={`/${jobUuid}/tests/${file.name}`} style={{ textDecoration: "none" }}>
                             <Box
                                 margin={2}
                                 display="flex"
