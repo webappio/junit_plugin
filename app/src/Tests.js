@@ -154,7 +154,7 @@ function Tests() {
                     }
                 </Box>
                 <p>
-                    Full JUnit XML report: <a href={`/xml/${fileName}`}>{fileName}</a>
+                    Full JUnit XML report: <a href={`/xml/${fileName}`} target="_blank" rel="noopener noreferrer">{fileName}</a>
                 </p>
             </header>
         </div>

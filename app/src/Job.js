@@ -61,7 +61,7 @@ function Job() {
                                         }}
                                         href={`/${jobUuid}/tests/${file.name}`}
                                     >
-                                        View Test
+                                        View Tests
                                     </Button>
                                 </Box>
                             </Box>
