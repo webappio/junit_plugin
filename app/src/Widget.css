@@ -48,6 +48,15 @@
     color: #FFFFFF;
 }
 
+.section.duration {
+    background-color: #9e9e9e;
+    color: #FFFFFF;
+}
+
+.section.duration hr {
+    border-color: #6e6e6e;
+}
+
 .topbar-text {
     margin: 10px;
     padding: 0;
