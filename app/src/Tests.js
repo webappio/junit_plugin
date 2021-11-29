@@ -2,21 +2,29 @@ import './App.css';
 import React, {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 import Box from '@mui/material/Box';
-import {Button, Typography} from "@mui/material";
+import {Button, Typography, CircularProgress} from "@mui/material";
 
 function Tests() {
     const [failedTestData, setFailedTestData] = useState([]);
     const [testsData, setTestsData] = useState({})
-    let { fileName } = useParams();
+    const [loadTestData, setLoadTestData] = useState(true);
+    const [loadFailedTestData, setLoadFailedTestData] = useState(true);
+    let { fileName, jobUuid } = useParams();
 
     useEffect(() => {
         (async function() {
             await fetch(`/api/tests/${fileName}`)
                 .then(response => response.json())
-                .then(data => setTestsData(data))
+                .then(data => {
+                    setTestsData(data);
+                    setLoadTestData(false);
+                })
             await fetch(`/api/failed-tests/${fileName}`)
                 .then(response => response.json())
-                .then(data => setFailedTestData(data))
+                .then(data => {
+                    setFailedTestData(data);
+                    setLoadFailedTestData(false);
+                })
         })()
     }, [fileName])
 
@@ -25,16 +33,25 @@ function Tests() {
     return (
         <div className="Tests">
             <header className="App-header">
-                <Box margin={3} maxWidth='100vw'>
+                <Box margin={3} width="100vw" maxWidth='100%' justifyContent="center" alignItems="center">
+                    <Box display="flex" justifyContent="center">
+                        <Box display="flex" style={{ width: "960px", maxWidth: "100%" }}>
+                        <Button variant="outlined" size="large" style={{ marginLeft: "10px" }} href={`/${jobUuid}`}> Back </Button>
+                        </Box>
+                    </Box>
+                    {
+                        loadTestData ?
+                        <CircularProgress />
+                        :
+                    <>
                     {
                         testsData ? <>
-                            <Box margin={3} display="flex" flexDirection="row">
-                                <Box display="flex" width="25vw"/>
+                            <Box margin={3} display="flex" flexDirection="row" justifyContent="center">
                                 <Box
                                     display="flex"
-                                    flexGrow={1}
                                     justifyContent="center"
                                     flexDirection="row"
+                                    flexWrap="wrap"
                                 >
                                     <Box
                                         display="flex"
@@ -44,7 +61,8 @@ function Tests() {
                                             width: 300,
                                             height: 150,
                                             backgroundColor: '#258271',
-                                            borderRadius: 5
+                                            borderRadius: 5,
+                                            margin: "10px"
                                         }}
                                     >
                                         <Typography style={{color: "#FFFFFF"}} variant="h4">
@@ -52,7 +70,6 @@ function Tests() {
                                         </Typography>
                                     </Box>
                                     <Box
-                                        marginLeft={5}
                                         display="flex"
                                         alignItems="center"
                                         justifyContent="center"
@@ -60,7 +77,8 @@ function Tests() {
                                             width: 300,
                                             height: 150,
                                             backgroundColor: '#C65858',
-                                            borderRadius: 5
+                                            borderRadius: 5,
+                                            margin: "10px"
                                         }}
                                     >
                                         <Typography style={{color: "#FFFFFF"}} variant="h4">
@@ -68,7 +86,6 @@ function Tests() {
                                         </Typography>
                                     </Box>
                                     <Box
-                                        marginLeft={5}
                                         display="flex"
                                         alignItems="center"
                                         justifyContent="center"
@@ -76,7 +93,8 @@ function Tests() {
                                             width: 300,
                                             height: 150,
                                             backgroundColor: '#9e9e9e',
-                                            borderRadius: 5
+                                            borderRadius: 5,
+                                            margin: "10px"
                                         }}
                                     >
                                         <Typography style={{color: "#FFFFFF"}} variant="h4">
@@ -84,8 +102,12 @@ function Tests() {
                                         </Typography>
                                     </Box>
                                 </Box>
-                                <Box display="flex" width="25vw"/>
                             </Box>
+                            {
+                                loadFailedTestData ?
+                                <CircularProgress />
+                                :
+                            
                             <Box display="flex" flexDirection="column" justifyContent="center" paddingX={3} >
                                 {failedTestData.map(data => {
                                     return(
@@ -118,14 +140,17 @@ function Tests() {
                                                     }}
                                                     href={`/stdout/${fileName}/${data.id}`}
                                                 >
-                                                    View stdout
+                                                    View Standard Output (stdout)
                                                 </Button>
                                             </Box>
                                         </Box>
                                     );
                                 })}
                             </Box>
+                            }
                         </> : null
+                    }
+                    </>
                     }
                 </Box>
                 <p>
