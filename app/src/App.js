@@ -13,7 +13,7 @@ function App() {
                     <Route path="/">
                         <Route index element={<NoJob />} />
                         <Route path=":jobUuid" element={<Job />} />
-                        <Route path="tests/:fileName" element={<Tests />}/>
+                        <Route path="/:jobUuid/tests/:fileName" element={<Tests />}/>
                         <Route path="widget/:jobUuid" element={<Widget />}/>
                         <Route path="*" element={<NoMatch />} />
                     </Route>
