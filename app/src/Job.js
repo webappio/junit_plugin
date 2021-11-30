@@ -7,9 +7,15 @@ import Box from "@mui/material/Box";
 function Job() {
     const [sshOutput, setSshOutput] = useState([]);
     const [loadSshOutput, setLoadSshOutput] = useState(true);
+    const [runnerIps, setRunnerIps] = useState([]);
     let { jobUuid } = useParams();
 
     useEffect(() =>{
+        fetch(`/api/runner-ips/${jobUuid}`)
+            .then(response => response.json())
+            .then(data => {
+                setRunnerIps(data);
+            })
         fetch(`/api/ssh/${jobUuid}`)
             .then(response => response.json())
             .then(data => {
@@ -17,6 +23,8 @@ function Job() {
                 setLoadSshOutput(false);
             })
     }, [jobUuid])
+
+    console.log(runnerIps);
 
     return (
         <div className="Default">
