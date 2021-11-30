@@ -3,6 +3,7 @@ import {BrowserRouter, Route, Routes, Link} from "react-router-dom";
 import Job from "./Job"
 import Tests from "./Tests";
 import Widget from "./Widget"
+import Runner from "./Runner"
 import React from 'react';
 
 function App() {
@@ -13,7 +14,8 @@ function App() {
                     <Route path="/">
                         <Route index element={<NoJob />} />
                         <Route path=":jobUuid" element={<Job />} />
-                        <Route path="/:jobUuid/tests/:fileName" element={<Tests />}/>
+                        <Route path="/:runnerIp/tests/:fileName" element={<Tests />}/>
+                        <Route path="/runner/:runnerIp" element={<Runner />}/>
                         <Route path="widget/:jobUuid" element={<Widget />}/>
                         <Route path="*" element={<NoMatch />} />
                     </Route>

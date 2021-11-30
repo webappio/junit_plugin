@@ -5,42 +5,25 @@ import {Typography, CircularProgress, Button } from "@mui/material";
 import Box from "@mui/material/Box";
 
 function Job() {
-    const [sshOutput, setSshOutput] = useState([]);
-    const [loadSshOutput, setLoadSshOutput] = useState(true);
-    const [runnerIps, setRunnerIps] = useState([]);
-    let { jobUuid } = useParams();
+    const [loading, setLoading] = useState(true);
+    const [runners, setRunners] = useState([]);
+    let {jobUuid} = useParams();
 
-    useEffect(() =>{
-        fetch(`/api/runner-ips/${jobUuid}`)
+    useEffect(() => {
+        fetch(`/api/runners/${jobUuid}`)
             .then(response => response.json())
             .then(data => {
-                setRunnerIps(data);
-            })
-        fetch(`/api/ssh/${jobUuid}`)
-            .then(response => response.json())
-            .then(data => {
-                setSshOutput(data);
-                setLoadSshOutput(false);
+                setRunners(data);
+                setLoading(false);
             })
     }, [jobUuid])
 
-    console.log(runnerIps);
-
-    return (
-        <div className="Default">
-            <header className="App-header">
-                <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
-                    <Typography sx={{ mt: 4, mb: 2 }} style={{ fontWeight: 600 }} variant="h4" component="div">
-                        All JUnit XML Files for Job: 
-                        <br />
-                        {jobUuid}
-                    </Typography>
-                        {
-                        loadSshOutput ?
-                        <CircularProgress />
-                            :
-                        sshOutput.map(file =>
-                            <a href={`/${jobUuid}/tests/${file.name}`} style={{ textDecoration: "none" }}>
+    let sections = [];
+    if (!runners.error) {
+        runners.forEach(runner => {
+                if (runner.running_pod_ip4) {
+                    sections.push(
+                        <a href={`/runner/${runner.running_pod_ip4}?layerfile=${runner.layerfile_path}`} style={{textDecoration: "none"}}>
                             <Box
                                 margin={2}
                                 display="flex"
@@ -56,7 +39,7 @@ function Job() {
                             >
                                 <Box display="flex" width="25%">
                                     <Typography>
-                                        {file.name}
+                                        {runner.layerfile_path}
                                     </Typography>
                                 </Box>
                                 <Box display="flex" width="25%" justifyContent="right">
@@ -67,14 +50,54 @@ function Job() {
                                             borderColor: '#1038c7',
                                             textTransform: "none"
                                         }}
-                                        href={`/${jobUuid}/tests/${file.name}`}
+                                        href={`/runner/${runner.running_pod_ip4}?layerfile=${runner.layerfile_path}`}
                                     >
-                                        View Tests
+                                        View Files
                                     </Button>
                                 </Box>
                             </Box>
-                            </a>
-                        )
+                        </a>)
+                }
+            }
+        );
+    }
+    if (sections.length === 0) {
+        sections.push(
+            <Box
+                margin={2}
+                display="flex"
+                flexDirection="row"
+                justifyContent="space-between"
+                alignItems="center"
+                padding={3}
+                sx={{
+                    border: 1,
+                    borderLeft: 10,
+                    borderColor: '#C65858'
+                }}
+            >
+                <Box display="flex" width="100%">
+                    <Typography>
+                        No running pods for job {jobUuid} found!
+                    </Typography>
+                </Box>
+            </Box>)
+    }
+
+    return (
+        <div className="Default">
+            <header className="App-header">
+                <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
+                    <Typography sx={{ mt: 4, mb: 2 }} style={{ fontWeight: 600 }} variant="h4" component="div">
+                        All JUnit XML Files for Job: 
+                        <br />
+                        {jobUuid}
+                    </Typography>
+                        {
+                        loading ?
+                        <CircularProgress />
+                            :
+                            sections
                     }
                 </Box>
             </header>
