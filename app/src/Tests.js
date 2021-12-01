@@ -9,24 +9,24 @@ function Tests() {
     const [testsData, setTestsData] = useState({})
     const [loadTestData, setLoadTestData] = useState(true);
     const [loadFailedTestData, setLoadFailedTestData] = useState(true);
-    let { fileName, jobUuid } = useParams();
+    let { fileName, runnerIp } = useParams();
 
     useEffect(() => {
         (async function() {
-            await fetch(`/api/tests/${fileName}`)
+            await fetch(`/api/tests/${runnerIp}/${fileName}`)
                 .then(response => response.json())
                 .then(data => {
                     setTestsData(data);
                     setLoadTestData(false);
                 })
-            await fetch(`/api/failed-tests/${fileName}`)
+            await fetch(`/api/failed-tests/${runnerIp}/${fileName}`)
                 .then(response => response.json())
                 .then(data => {
                     setFailedTestData(data);
                     setLoadFailedTestData(false);
                 })
         })()
-    }, [fileName])
+    }, [fileName, runnerIp])
 
     let passed = testsData.tests - testsData.failures
 
@@ -36,7 +36,7 @@ function Tests() {
                 <Box margin={3} width="100vw" maxWidth='100%' justifyContent="center" alignItems="center">
                     <Box display="flex" justifyContent="center">
                         <Box display="flex" style={{ width: "960px", maxWidth: "100%" }}>
-                        <Button variant="outlined" size="large" style={{ marginLeft: "10px" }} href={`/${jobUuid}`}> Back </Button>
+                        <Button variant="outlined" size="large" style={{ marginLeft: "10px" }} href={`/runner/${runnerIp}`}> Back </Button>
                         </Box>
                     </Box>
                     {
@@ -138,7 +138,7 @@ function Tests() {
                                                         borderColor: '#C65858',
                                                         textTransform: "none"
                                                     }}
-                                                    href={`/stdout/${fileName}/${data.id}`}
+                                                    href={`/stdout/${runnerIp}/${fileName}/${data.id}`}
                                                 >
                                                     View Standard Output (stdout)
                                                 </Button>
@@ -154,7 +154,7 @@ function Tests() {
                     }
                 </Box>
                 <p>
-                    Full JUnit XML report: <a href={`/xml/${fileName}`} target="_blank" rel="noopener noreferrer">{fileName}</a>
+                    Full JUnit XML report: <a href={`/xml/${runnerIp}/${fileName}`} target="_blank" rel="noopener noreferrer">{fileName}</a>
                 </p>
             </header>
         </div>

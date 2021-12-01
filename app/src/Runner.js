@@ -1,6 +1,6 @@
 import './App.css';
 import React, {useEffect, useState} from "react";
-import {useLocation, useParams} from "react-router-dom";
+import {useNavigate, useLocation, useParams} from "react-router-dom";
 import {Typography, CircularProgress, Button } from "@mui/material";
 import Box from "@mui/material/Box";
 
@@ -8,6 +8,7 @@ function Runner() {
     const [loading, setLoading] = useState(true);
     const [files, setFiles] = useState([]);
     let {runnerIp} = useParams();
+    let navigate = useNavigate();
     function useQuery() {
         const { search } = useLocation();
 
@@ -55,7 +56,7 @@ function Runner() {
                                         borderColor: '#1038c7',
                                         textTransform: "none"
                                     }}
-                                    href={`/${runnerIp}/tests/${file.name}`}
+                                    href={`/tests/${runnerIp}/${file.name}`}
                                 >
                                     View Files
                                 </Button>
@@ -92,8 +93,13 @@ function Runner() {
         <div className="Default">
             <header className="App-header">
                 <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
+                    <Box display="flex" justifyContent="center">
+                        <Box display="flex" style={{ width: "960px", maxWidth: "100%" }}>
+                            <Button variant="outlined" size="large" style={{ marginLeft: "10px" }} onClick={() => navigate(-1)}> Back </Button>
+                        </Box>
+                    </Box>
                     <Typography sx={{ mt: 4, mb: 2 }} style={{ fontWeight: 600 }} variant="h4" component="div">
-                        All JUnit XML Files for Job:
+                        All JUnit XML Files from Layerfile:
                         <br />
                         {query.get("layerfile")}
                     </Typography>
