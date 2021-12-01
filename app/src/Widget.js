@@ -4,15 +4,14 @@ import "./Widget.css"
 import {Box} from "@mui/material";
 
 export default function Widget() {
-    const { jobUuid } = useParams();
+    const { runnerIp } = useParams();
     const [testsData, setTestsData] = useState({})
 
     useEffect(() => {
-        // should use this api with jobUUID (otherwise - which xml to use? might as well parse all and add up)
-        fetch(`/api/all-tests/${jobUuid}`)
+        fetch(`/api/all-tests/${runnerIp}`)
             .then(response => response.json())
             .then(data => setTestsData(data[0]));
-    }, [jobUuid]);
+    }, [runnerIp]);
 
     const passed = testsData ? testsData.tests - testsData.failures : 0;
     const failures = testsData ? testsData.failures : 0;
