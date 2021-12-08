@@ -21,7 +21,7 @@ function Job() {
     let sections = [];
     if (!runners.error) {
         runners.forEach(runner => {
-                if (runner.running_pod_ip4) {
+                if (runner.running_pod_ip4 && runner.Status === 'RUNNING') {
                     sections.push(
                         <a href={`/runner/${runner.running_pod_ip4}?layerfile=${runner.layerfile_path}`} style={{textDecoration: "none"}}>
                             <Box
@@ -78,7 +78,7 @@ function Job() {
             >
                 <Box display="flex" width="100%">
                     <Typography>
-                        No running pods for job {jobUuid} found!
+                        No running runners for job {jobUuid} found!
                     </Typography>
                 </Box>
             </Box>)
@@ -89,7 +89,7 @@ function Job() {
             <header className="App-header">
                 <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
                     <Typography sx={{ mt: 4, mb: 2 }} style={{ fontWeight: 600 }} variant="h4" component="div">
-                        All JUnit XML Files for Job: 
+                        All Running Layerfile/Staging Server Runners for Job:
                         <br />
                         {jobUuid}
                     </Typography>
