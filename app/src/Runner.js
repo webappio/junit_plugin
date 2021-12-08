@@ -18,10 +18,14 @@ function Runner() {
 
     useEffect(() => {
         fetch(`/api/ssh/${runnerIp}`)
-            .then(response => response.json())
+            .then(response => {
+                if (response.ok) {
+                    setLoading(false);
+                }
+                return response.json()
+            })
             .then(data => {
                 setFiles(data);
-                setLoading(false);
             })
     }, [runnerIp])
 
