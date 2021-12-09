@@ -87,7 +87,7 @@ function Runner() {
             >
                 <Box display="flex" width="100%">
                     <Typography>
-                        No JUnit XML report found!
+                        No JUnit XML report found! Check /webappio/junitXML directory (abosolute path).
                     </Typography>
                 </Box>
             </Box>)
