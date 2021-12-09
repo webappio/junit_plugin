@@ -16,7 +16,7 @@ RUN npm run build
 
 WORKDIR ../lib
 RUN npm install
-COPY ./lib/fellow.xml /layercidata/junitXML/fellow.xml
+COPY ./lib/fellow.xml /webappio/junitXML/fellow.xml
 RUN BACKGROUND npm start
 
 # Create a unique link to share the app in this runner.
