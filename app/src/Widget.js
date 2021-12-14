@@ -4,14 +4,29 @@ import "./Widget.css"
 import {Box} from "@mui/material";
 
 export default function Widget() {
-    const { runnerIp } = useParams();
-    const [testsData, setTestsData] = useState({})
+    const { jobUuid } = useParams();
+    const [runnerIps, setRunnerIps] = useState({});
+    const [loading, setLoading] = useState(true);
+    const [testsData, setTestsData] = useState({});
 
     useEffect(() => {
-        fetch(`/api/all-tests/${runnerIp}`)
+        fetch(`/api/runners/${jobUuid}`)
             .then(response => response.json())
-            .then(data => setTestsData(data[0]));
-    }, [runnerIp]);
+            .then(data => setRunnerIps(data))
+    }, [jobUuid]);
+
+    useEffect(() => {
+        for (let i = 0; i < runnerIps.length && loading; i++) {
+            fetch(`/api/all-tests/${runnerIps[i]}`)
+                .then(response => {
+                    if (response.ok) {
+                        setLoading(false);
+                    }
+                    return response.json();
+                })
+                .then(data => setTestsData(data[0]))
+        }
+    }, [runnerIps, loading])
 
     const passed = testsData ? testsData.tests - testsData.failures : 0;
     const failures = testsData ? testsData.failures : 0;
