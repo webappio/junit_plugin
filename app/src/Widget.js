@@ -16,7 +16,7 @@ export default function Widget() {
     }, [jobUuid]);
 
     useEffect(() => {
-        for (let i = 0; i < runnerIps.length && loading; i++) {
+        for (let i = 0; i < runnerIps.length && loading && runnerIps[i].Status === 'RUNNING'; i++) {
             fetch(`/api/all-tests/${runnerIps[i]}`)
                 .then(response => {
                     if (response.ok) {

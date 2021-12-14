@@ -14,9 +14,9 @@ function App() {
                     <Route path="/">
                         <Route index element={<NoJob />} />
                         <Route path=":jobUuid" element={<Job />} />
-                        <Route path="/tests/:runnerIp/:fileName" element={<Tests />}/>
-                        <Route path="/runner/:runnerIp" element={<Runner />}/>
-                        <Route path="widget/:runnerIp" element={<Widget />}/>
+                        <Route path="tests/:runnerIp/:fileName" element={<Tests />}/>
+                        <Route path="runner/:runnerIp" element={<Runner />}/>
+                        <Route path="widget/:jobUuid" element={<Widget />}/>
                         <Route path="*" element={<NoMatch />} />
                     </Route>
                 </Routes>
