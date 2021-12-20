@@ -103,7 +103,7 @@ function Runner() {
                         </Box>
                     </Box>
                     <Typography sx={{ mt: 4, mb: 2 }} style={{ fontWeight: 600 }} variant="h4" component="div">
-                        All JUnit XML Files from Layerfile:
+                        All JUnit XML Files from:
                         <br />
                         {query.get("layerfile")}
                     </Typography>
