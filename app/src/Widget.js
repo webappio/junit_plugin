@@ -6,8 +6,11 @@ import {Box} from "@mui/material";
 export default function Widget() {
     const { jobUuid } = useParams();
     const [runnerIps, setRunnerIps] = useState({});
-    const [loading, setLoading] = useState(true);
-    const [testsData, setTestsData] = useState({});
+    const [testsData, setTestsData] = useState({
+        failures: 0,
+        tests: 0,
+        time: 0,
+    });
 
     useEffect(() => {
         fetch(`/api/runners/${jobUuid}`)
@@ -16,21 +19,26 @@ export default function Widget() {
     }, [jobUuid]);
 
     useEffect(() => {
-        for (let i = 0; i < runnerIps.length && loading && runnerIps[i].Status === 'RUNNING'; i++) {
+        for (let i = 0; i < runnerIps.length && runnerIps[i].Status === 'RUNNING'; i++) {
+            console.log(`fetching ${i}`)
             fetch(`/api/all-tests/${runnerIps[i]}`)
                 .then(response => {
                     if (response.ok) {
-                        setLoading(false);
+                        return response.json();
                     }
-                    return response.json();
                 })
-                .then(data => setTestsData(data[0]))
+                .then(data => setTestsData(prevState => {
+                    prevState.failures += data[0].failures;
+                    prevState.tests += data[0].tests;
+                    prevState.time += data[0].time;
+                    return prevState;
+                }))
         }
-    }, [runnerIps, loading])
+    }, [runnerIps])
 
-    const passed = testsData ? testsData.tests - testsData.failures : 0;
-    const failures = testsData ? testsData.failures : 0;
-    const duration = testsData ? testsData.time : 0;
+    const passed = testsData.tests - testsData.failures;
+    const failures = testsData.failures;
+    const duration = testsData.time;
 
     const status = <span className={failures > 0 ? "status-failure" : "status-success"}>
         <i className="feather icon-check-circle"/>&nbsp;{failures > 0 ? failures +" Failures" : "Success"}
