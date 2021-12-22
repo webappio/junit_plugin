@@ -14,6 +14,10 @@ export default function Widget() {
     });
 
     useEffect(() => {
+        console.log(testsData);
+    }, [testsData])
+
+    useEffect(() => {
         fetch(`/api/runners/${jobUuid}`)
             .then(response => response.json())
             .then(data => setRunnerIps(() => {
@@ -23,7 +27,6 @@ export default function Widget() {
     }, [jobUuid]);
 
     useEffect(() => {
-        console.log("hit!!!")
         Promise.all(
             runnerIps.filter(runner => runner.Status === 'RUNNING').map(runner =>
                 fetch(`/api/all-tests/${runner.running_pod_ip4}`)
@@ -32,17 +35,21 @@ export default function Widget() {
                             return response.json();
                         }
                     })
-                    .then(data => setTestsData(prevState => {
-                        console.log(prevState);
-                        prevState.failures += data[0].failures;
-                        prevState.tests += data[0].tests;
-                        prevState.time += data[0].time;
-                        console.log(prevState);
-                        return prevState;
-                    }))
+                    .then(data => data[0])
                     .catch(err => console.error(err))
             )
-        ).then(() => console.log('done'))
+        ).then((values) => {
+            const reducer = (previousValue, currentValue) => {
+                return {
+                    failures: previousValue.failures + currentValue.failures,
+                    tests: previousValue.tests + currentValue.tests,
+                    time: previousValue.time + currentValue.time,
+                }
+            }
+            if (values.length > 0) {
+                setTestsData(values.reduce(reducer));
+            }
+        });
     }, [runnerIps])
 
 
