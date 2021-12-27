@@ -126,8 +126,10 @@ function Tests() {
                                             }}
                                         >
                                             <Box display="flex" width="25%">
-                                                <Typography>
-                                                    {data.text}
+                                                <Typography
+                                                    style={{ wordWrap: "break-word" }}
+                                                >
+                                                    {data.testName}
                                                 </Typography>
                                             </Box>
                                             <Box display="flex" width="25%" justifyContent="right">
@@ -138,7 +140,7 @@ function Tests() {
                                                         borderColor: '#C65858',
                                                         textTransform: "none"
                                                     }}
-                                                    href={`/stdout/${runnerIp}/${fileName}/${data.id}`}
+                                                    href={`/stdout/${runnerIp}/${fileName}/${data.testName}`}
                                                 >
                                                     View Standard Output (stdout)
                                                 </Button>
